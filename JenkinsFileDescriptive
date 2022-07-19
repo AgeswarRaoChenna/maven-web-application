@@ -1,0 +1,36 @@
+pipeline{
+  agent any
+    tools{
+      maven "maven3.8.6"
+    }
+    stages{
+      stage('getCode'){
+        steps{
+           git branch: 'development', credentialsId: '57cfc1ff-9f3e-4f38-b2c7-6b70cab539ff', url: 'https://github.com/AgeswarRaoChenna/maven-web-application.git'
+        }
+      }//closes get code stage
+      stage('buildPackage'){
+        steps{
+          sh "mvn clean package"
+        }     
+      }//closes build package stage
+      stage('sonarQubeReport'){
+        steps{
+          sh "mvn sonar:sonar"
+        }
+      }//closes sonarQube Report stage
+      stage('uploadToNexus'){
+        steps{
+          sh "mvn deploy"
+        }
+      }//closes upload to nexus
+      stage('deployToTomcat'){
+        stage{
+          sshagent(['765e1d6b-37ff-4d3b-98c6-c88cb8cf7683']) {
+            sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@13.234.111.99:/opt/apache-tomcat-9.0.64/webapps"
+        }
+        }
+      }//closes deploy to tomcat server
+    
+    }//closes stages
+}//closes pipeline
