@@ -6,7 +6,7 @@ node{
       git branch: 'development', credentialsId: '57cfc1ff-9f3e-4f38-b2c7-6b70cab539ff', url: 'https://github.com/AgeswarRaoChenna/maven-web-application.git'
     }
     stage('buildPackage'){
-      sh "${mavenHome}/bin/mvn clea package"
+      sh "${mavenHome}/bin/mvn clean package"
     }
     stage('sonarQubeReport'){
       sh "${mavenHome}/bin/mvn sonar:sonar"
