@@ -36,7 +36,7 @@ pipeline{
       post {
         success {
           slackNotification(currentBuild.result)
-          echo ${currentBuild.result}
+          echo "${currentBuild.result}"
         }
         failure {
           slackNotification(currentBuild.result)
