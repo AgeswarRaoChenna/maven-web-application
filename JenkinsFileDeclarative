@@ -3,6 +3,9 @@ pipeline{
     tools{
       maven "maven3.8.6"
     }
+    triggers {
+      pollSCM '* * * * *'
+    }
     stages{
       stage('getCode'){
         steps{
