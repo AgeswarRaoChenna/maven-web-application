@@ -6,6 +6,7 @@ pipeline{
     stages{
       stage('getCode'){
         steps{
+           slackNotification('STARTED')
            git branch: 'development', credentialsId: '57cfc1ff-9f3e-4f38-b2c7-6b70cab539ff', url: 'https://github.com/AgeswarRaoChenna/maven-web-application.git'
         }
       }//closes get code stage
